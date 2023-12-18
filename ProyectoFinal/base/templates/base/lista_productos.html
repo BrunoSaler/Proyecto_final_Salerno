@@ -1,0 +1,50 @@
+{% extends "base/navbar.html" %}
+{% block content %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <div class="alert alert-success" role="alert">
+                {{ message }}
+                </div>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <br><br>
+    <h1>Productos</h1>
+    <br><br>
+    <p><button class="btn btn-success" type="button" onclick="location.href='/menu/newproduct'">Crear producto</button>&emsp;<button class="btn btn-success" type="button" onclick="location.href='/menu/newinfo'">Crear reseña</button></p>
+    <br><br>
+    {% if productos %}
+    <table class="table table-success table-striped">
+        <thead>
+            <th>Modelo</th>
+            <th>Producto</th>
+            <th>Categoría</th>
+            <th>Marca</th>
+            <th>Precio</th>   
+            <th></th>       
+            <th>Acciónes</th> 
+            <th></th> 
+        </thead>
+        <tbody>
+                {% for producto in productos %}
+                    <tr>
+                        <td>{{producto.modelo}}</td>
+                        <td>{{producto.producto}}</td>
+                        <td>{{producto.get_categoria_display}}</td>
+                        <td>{{producto.marca}}</td>
+                        <td>{{producto.precio}}</td>
+                        <td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='{% url 'edit-product' producto.id %}'">EDITAR PRODUCTO</button></td>
+                        <td><button class="btn btn-danger btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='{% url 'delete-product' producto.id %}'">ELIMINAR PRODUCTO</button></td>
+                        <td><button class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" onclick="location.href='/menu/infoprod/<{{producto.modelo}}>'">VER RESEÑA</button></td>
+                        </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    {% load static %}
+    <figure class="mb-4"><div style="text-align: center;"><img class="img-fluid rounded" src="{% static 'base/assets/img/notfound.png' %}" alt="..." /></figure></div>
+    <br><br>
+    <div style="text-align: center;"><h1>UPS! No hay nada que mostrar aún</h1></div>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,42 @@
+{% extends "base/navbar.html" %}
+{% block content %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <br><br>
+    {% if id %}
+    <a class="btn btn-lg btn-primary" onclick="location.href='{% url 'newcomment' id %}'" role="button">Comentar</a>
+    {% endif %}
+    {% if titulo %}
+    <h1>Comentarios del post {{titulo}}</h1>
+    {% endif %}
+    {% if comentarios %}
+    <table class="table table-success table-striped">
+        <thead>
+            <th>Autor</th>
+            <th>Fecha</th>
+            <th>Comentario</th>           
+        </thead>
+        {% for x in comentarios %}
+            <tbody>
+                <tr>
+                    <td>{{x.autor}}</td>
+                    <td>{{x.fecha}}</td>
+                    <td>{{x.comentario}}</td>
+                </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+    {% else %}
+        {% load static %}
+        <figure class="mb-4"><div style="text-align: center;"><img class="img-fluid rounded" src="{% static 'base/assets/img/notfound.png' %}" alt="..." /></figure></div>
+        <br><br>
+        <div style="text-align: center;"><h1>UPS! No hay nada que mostrar aún</h1></div>
+    {% endif %}   
+{% endblock content %}
